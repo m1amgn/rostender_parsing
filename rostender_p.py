@@ -22,9 +22,10 @@ kwd_ektoskeil = '%FD%EA%F2%EE%F1%EA%E5%E9%EB'
 kwd_aminat = '%E0%EC%E8%ED%E0%F2'
 
 
-
-# function wich makes urls list if there is pagination on web site
 def url_constructor(kwd, actual_date):
+           
+'''function wich makes urls list if there is pagination on web site'''
+
     base_url = f'http://rostender.info/extsearch.php?pgsearch=0&extsearch=2&branch134=on&branch234=on&branch239=on&kwd={kwd}&from={actual_date}&to=&pfrom=&pto='
     urls = []
     urls.append(base_url)
@@ -50,8 +51,10 @@ def url_constructor(kwd, actual_date):
         print(f'ERROR{request.status_code}')
     return urls
 
-# parse function for web site rostender.info which find need information filter information and make dictionary
 def rostender_parse(urls, headers):
+           
+'''Parse function for web site rostender.info which find need information filter information and make dictionary'''
+           
     tenders_info = []
     for url in urls:
         session = requests.Session()
@@ -85,14 +88,14 @@ def rostender_parse(urls, headers):
     print(f'Количество найденных тендеров {len(tenders_info)}')
     return tenders_info
 
-# function which write new csv file every using
 def files_writer(tenders_info, file_name):
+           
+'''Function which write new csv file every using'''
+
     with open(f'{file_name}.csv', 'w') as file:
         a_pen = csv.writer(file)
         for info in tenders_info:
             a_pen.writerow((info['description'], url_for_href+info['href'], info['end_date']))
-
-
 
 # actual date set up by user
 print('Введи дату размещения тендеров. Обязательный формат даты: 01.02.2020')
